@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:4
+    command: --replSet rs0
+    restart: always
+
+    ports:
+      - '27017:27017'
+      - '28017:28017'
+    volumes:
+      - ./data/mongo:/data/db
+# docker-compose exec mongo mongo --eval "rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'localhost:27017'}]});"

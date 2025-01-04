@@ -1,0 +1,9 @@
+{
+    "extends": "@zardoy/tsconfig/react",
+    "compilerOptions": {
+        "resolveJsonModule": true
+    },
+    "include": [
+        "src"
+    ]
+}

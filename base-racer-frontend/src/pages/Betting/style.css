@@ -1,0 +1,65 @@
+header {
+  position: sticky;
+  top: 0;
+  background: rgb(0, 200, 255);
+  height: 60px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  z-index: 10;
+  /* for positioning text, links, etc */
+  display: flex;
+  align-items: center;
+}
+
+.flex-container {
+  display: flex;
+}
+
+aside {
+  position: sticky;
+  background: #171923;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 0;
+  padding-right: 0;
+  width: 280px;
+  /* height: 550px; */
+  /* margin-bottom: 20px; */
+  box-shadow: 0 0 8px #1abcfc;
+  box-sizing: border-box;
+}
+.aside2 {
+  width: 280px;
+}
+.flexTop {
+  display: none;
+}
+main {
+  /* padding-left: 20px; */
+  flex-grow: 1;
+}
+
+.content {
+  background: transparent;
+  /* height: 400px; */
+  margin-top: 20px;
+  padding: 20px;
+  /* margin-bottom: 20px; */
+}
+
+@media screen and (max-width: 1160px) {
+  .flexTop {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 2rem;
+  }
+  .flex-container {
+    /* margin-top: 20px; */
+  }
+  aside {
+    display: none;
+  }
+}

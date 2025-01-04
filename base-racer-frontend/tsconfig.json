@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "jsx": "react-jsx",
+        "allowJs": true,
+        "skipLibCheck": true,
+        "checkJs": true,
+        "noEmit": true,
+        "module": "ESNext",
+        "esModuleInterop": true,
+        "moduleResolution": "Node",
+        "allowImportingTsExtensions": true,
+        "skipDefaultLibCheck": true,
+        "strictNullChecks": true
+    },
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "node_modules",
+        "src/**/*.js"
+    ]
+}

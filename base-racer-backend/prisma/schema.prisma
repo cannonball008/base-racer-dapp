@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nexusPrisma {
+  provider = "nexus-prisma"
+}
+
+datasource prisma {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum BetStatus {
+  OPEN
+  CLOSED
+}
+
+enum RaceStatus {
+  SCHEDULED
+  CANCELLED
+  ONGOING
+  FINISHED
+}
+
+model TelegramChat {
+  id     Int    @id @map("_id")
+  chatId String @unique
+}
+
+model Race {
+  id         String     @id @map("_id")
+  name       String
+  deleted    Boolean    @default(false)
+  startingAt DateTime   @default(now())
+  laps       Int
+  finishedAt DateTime?
+  betStatus  BetStatus  @default(OPEN)
+  status     RaceStatus @default(SCHEDULED)
+  currentLap Int        @default(0)
+  updatedAt  DateTime   @updatedAt
+  minBet     Float      @default(0)
+  maxBet     Float      @default(0)
+
+  contestantIds    String[]
+  contestants      Contestants[]      @relation(fields: [contestantIds], references: [id])
+  RaceLapBetStatus RaceLapBetStatus[]
+  Bet              Bet[]
+}
+
+model RaceLapBetStatus {
+  id     String    @id @default(uuid()) @map("_id")
+  raceId String
+  lap    Int
+  status BetStatus
+
+  race Race @relation(fields: [raceId], references: [id])
+}
+
+model RaceResults {
+  id                      String @id @default(uuid()) @map("_id")
+  raceId                  String
+  lap                     Int?
+  firstPlaceContestantId  String
+  secondPlaceContestantId String
+  thirdPlaceContestantId  String
+
+  // firstPlaceContestant  Contestants @relation(fields: [firstPlaceContestantId], references: [id])
+  // secondPlaceContestant Contestants @relation(fields: [secondPlaceContestantId], references: [id])
+  // thirdPlaceContestant  Contestants @relation(fields: [thirdPlaceContestantId], references: [id])
+}
+
+model Contestants {
+  id      String   @id @map("_id")
+  name    String
+  pic     String
+  raceIds String[]
+
+  races Race[] @relation(fields: [raceIds], references: [id])
+  // firstPlaces  RaceResults[]
+  // secondPlaces RaceResults[]
+  // thirdPlaces  RaceResults[]
+}
+
+enum BetResult {
+  WIN
+  LOSE // LOOSE
+  WAITING // STALE
+  REMOVED
+}
+
+enum BetType {
+  RACE
+  LAP
+}
+
+model Bet {
+  id           String    @id @map("_id")
+  bettor       String
+  raceId       String
+  lap          Int
+  amount       Float?
+  contestantId String
+  result       BetResult
+  betType      BetType
+  createdAt    DateTime  @default(now())
+  claimed      Boolean   @default(false)
+  winAmount    Float?    @default(-1)
+  tx           String?
+
+  race Race @relation(fields: [raceId], references: [id])
+}

@@ -1,0 +1,13 @@
+generates:
+    default:
+        plugins:
+            - 'typescript'
+            - 'typescript-operations'
+            - 'typescript-react-query'
+        config:
+            errorType: import("./fetcher").ApolloError
+            noExport: true
+            skipTypename: true
+            # onlyOperationTypes: true
+            fetcher:
+                func: './fetcher#fetcher'

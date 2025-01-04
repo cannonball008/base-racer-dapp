@@ -1,0 +1,525 @@
+// Imports
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+
+$font-main: "Raleway", sans-serif;
+$font-alt: "Raleway", sans-serif;
+
+// Colours
+$bg: #000e1a;
+$bc1: #0ab2d6;
+$bc2: #0c60cd;
+$white: #fff;
+$score: #1abcfc;
+$success: #33e642;
+$live: $success;
+$error: #ff1b43;
+
+// Special Size
+$size: 12px;
+
+// Mixins
+@mixin sizer {
+  width: $size;
+  height: $size;
+}
+
+@mixin cubic {
+  transition: all 1.1s cubic-bezier(0.8, 0, 0.2, 1);
+}
+
+@mixin ease {
+  transition: all 0.2s ease-in-out;
+}
+
+@mixin grad {
+  background: linear-gradient(-90deg, $bc1 0%, $bc2 100%);
+}
+
+// Basic
+
+.iframe-main {
+  height: 600px;
+  @media screen and (max-height: 750px) {
+    height: 50vh;
+  }
+
+}
+
+// Container
+.wrap {
+  //   margin: $size;
+  width: 100%;
+  min-width: 590px;
+  max-width: 878px;
+}
+
+// Card
+.card {
+  @include ease;
+  position: relative;
+  display: block;
+  margin: 2px 0;
+
+  width: 100%;
+  height: 55px;
+  background-color: rgba($white, 0.03);
+
+  &:hover {
+    background-color: rgba($white, 0.05);
+  }
+
+  &-left,
+  &-right {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+  }
+
+  &-left {
+    overflow: auto;
+
+    &__score,
+    &__competitors {
+      display: inline-block;
+    }
+
+    &__score {
+      position: relative;
+      float: left;
+      height: 100%;
+      padding: 0 $size * 2;
+
+      h5 {
+        position: relative;
+        color: $score;
+        font-family: $font-alt;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 55px;
+      }
+    }
+
+    &__competitors {
+      position: relative;
+      float: left;
+      height: 55px;
+      padding: 0 $size * 2 0 0;
+
+      a {
+        @include ease;
+        display: block;
+        line-height: 55px;
+        font-size: $size;
+        color: rgba($white, 1);
+        cursor: pointer;
+
+        &:hover {
+          color: rgba($white, 0.5);
+
+          > span {
+            color: rgba($white, 0.5);
+          }
+        }
+
+        > span {
+          @include ease;
+          display: inline;
+          color: rgba($white, 0.5);
+        }
+      }
+    }
+  }
+
+  &-right {
+    float: right;
+
+    &__fav,
+    &__live,
+    &__odds,
+    &__markets {
+      position: relative;
+      display: inline-block;
+      float: left;
+    }
+
+    &__fav {
+      padding: 0 $size;
+      cursor: pointer;
+      height: 55px;
+    }
+
+    &__live {
+      padding: 0 $size;
+      pointer-events: none;
+
+      em {
+        line-height: 55px;
+        font-size: $size - 2;
+        color: $live;
+      }
+    }
+
+    &__odds {
+      height: 55px;
+      overflow: auto;
+      padding: 0 calc($size/2);
+
+      .odds-1 {
+        margin-left: 11px;
+      }
+      .odds-2 {
+        margin-right: 11px;
+      }
+
+      button {
+        @include ease;
+
+        display: inline-block;
+        position: relative;
+        float: left;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: 0 1px;
+        padding: 0;
+        width: 50px;
+        height: 35px;
+
+        border: none;
+        background-color: rgba($white, 0.05);
+
+        &:before {
+          @include ease;
+          @include grad;
+          content: "";
+          position: absolute;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba($white, 0.1);
+        }
+
+        &:focus,
+        &:active {
+          outline: none;
+        }
+
+        &.clicked {
+          &:before {
+            opacity: 1;
+          }
+        }
+
+        strong,
+        p {
+          display: block;
+          position: absolute;
+          z-index: 2;
+          left: 0;
+          right: 0;
+          text-align: center;
+        }
+
+        strong {
+          top: 4px;
+
+          color: rgba($white, 0.4);
+          line-height: 1;
+        }
+
+        p {
+          bottom: 5px;
+
+          color: rgba($white, 1);
+          font-size: $size + 1;
+          line-height: 1;
+        }
+      }
+    }
+
+    &__markets {
+      padding: 0 $size * 2 0 $size;
+
+      &:hover {
+        cursor: pointer;
+
+        strong {
+          color: rgba($white, 0);
+        }
+
+        i {
+          left: 40%;
+          opacity: 1;
+        }
+      }
+
+      strong {
+        @include ease;
+        line-height: 55px;
+        color: rgba($white, 0.4);
+      }
+
+      i {
+        @include ease;
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 30%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+      }
+
+      i,
+      svg {
+        @include sizer;
+      }
+
+      svg {
+        fill: $white;
+      }
+    }
+  }
+
+  // States
+  &.odds-up {
+    .odds-2 {
+      &.clicked {
+        &:after {
+          border-color: transparent transparent $white transparent;
+        }
+        p {
+          color: $white;
+        }
+      }
+
+      strong {
+        opacity: 0;
+      }
+
+      p {
+        color: $success;
+      }
+
+      &:after {
+        content: "";
+        border-style: solid;
+        border-width: 4px 4px 5px 4px;
+        border-color: transparent transparent $success transparent;
+        border-radius: 2px;
+        position: absolute;
+        z-index: 3;
+        left: 50%;
+        top: 2px;
+        transform: rotate(0deg) scale(1) translateX(-50%);
+
+        animation: up 0.75s ease-in-out;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
+        animation-delay: 0.25s;
+      }
+
+      @keyframes up {
+        0% {
+          top: 2px;
+          opacity: 0;
+        }
+
+        50% {
+          top: 4px;
+          opacity: 1;
+        }
+
+        100% {
+          top: 2px;
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  &.odds-down {
+    .odds-1 {
+      &.clicked {
+        &:after {
+          border-color: $white transparent transparent transparent;
+        }
+        p {
+          color: $white;
+        }
+      }
+
+      strong {
+        opacity: 0;
+      }
+
+      p {
+        color: $error;
+      }
+
+      &:after {
+        content: "";
+        border-style: solid;
+        border-width: 5px 4px 4px 4px;
+        border-color: $error transparent transparent transparent;
+        border-radius: 2px;
+        position: absolute;
+        z-index: 3;
+        left: 50%;
+        top: 6px;
+        transform: rotate(0deg) scale(1) translateX(-50%);
+
+        animation: down 0.75s ease-in-out;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
+      }
+
+      @keyframes down {
+        0% {
+          top: 4px;
+          opacity: 0;
+        }
+
+        50% {
+          top: 7px;
+          opacity: 1;
+        }
+
+        100% {
+          top: 4px;
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  &.disabled {
+    .odds-1,
+    .odds-x,
+    .odds-2 {
+      background-color: rgba($white, 0);
+      cursor: not-allowed;
+
+      p {
+        color: rgba($white, 0.2);
+      }
+    }
+  }
+}
+
+// Animated Star Code
+i,
+svg,
+path {
+  margin: 0;
+  padding: 0;
+}
+
+.star {
+  @include sizer;
+
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  &:hover {
+    .white {
+      stroke: rgba($white, 0.5);
+    }
+  }
+
+  // When clicked
+  &.fav {
+    .white {
+      stroke: rgba($white, 0);
+      transform: scale(1.5);
+    }
+
+    .gold {
+      transform: scale(1);
+    }
+  }
+
+  .white {
+    @include ease;
+    @include sizer;
+
+    display: block;
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+    fill: transparent;
+    stroke-width: 1px;
+    stroke: rgba($white, 0.3);
+  }
+
+  .gold {
+    @extend .white;
+    @include ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scale(0);
+    transform-origin: center center;
+    z-index: 2;
+
+    fill: $score;
+    stroke: none;
+  }
+}
+
+// Shrink
+.shrink {
+  position: absolute;
+  display: block;
+  top: $size * 2;
+  right: $size * 2;
+
+  padding: 24px 20px;
+
+  background-color: rgba($white, 0.05);
+  border-radius: 100%;
+
+  color: $white;
+  font-size: $size - 2;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    + .wrap {
+      width: 640px;
+    }
+  }
+}
+
+@media screen and (max-width: 1160px) {
+  .wrap {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .card {
+    // height: auto !important;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .card-left,
+  .card-right {
+    width: 100%;
+    float: none;
+  }
+  body .chakra-tabs__tab-panel {
+    padding: 0;
+  }
+  body .content {
+    padding: 0;
+  }
+}

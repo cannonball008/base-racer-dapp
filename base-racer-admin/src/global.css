@@ -1,0 +1,47 @@
+@import '@fontsource/space-grotesk';
+@import '@fontsource/space-grotesk/300.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/700.css';
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+input {
+    /* reset */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    background: none;
+}
+
+html {
+    font-family: 'Space Grotesk', sans-serif;
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    scrollbar-width: thin;
+    user-select: none;
+}
+
+body {
+    /* background-color: #04040c;
+    color: white; */
+    --background-offset-x: 0px;
+    --background-offset-y: 0px;
+    background: no-repeat calc(50% + var(--background-offset-x)) calc(50% + var(--background-offset-y)) / cover url('assets/background.png') fixed,
+        no-repeat left top / contain url('assets/xbxLogoBg.svg'), no-repeat right top / 520px 313px url('assets/CirclesBg.svg');
+}

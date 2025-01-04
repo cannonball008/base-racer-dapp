@@ -1,0 +1,6 @@
+{
+    "[typescriptreact][typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "typescript.format.semicolons": "remove"
+}

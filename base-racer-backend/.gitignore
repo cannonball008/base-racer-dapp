@@ -1,0 +1,18 @@
+node_modules
+*.log
+yarn.lock
+package-lock.json
+secret-*
+.env
+generated-*
+frontend/dist
+.vercel/**
+.next
+data*
+.vercel
+
+.DS_Store
+out
+
+# Sentry Config File
+.env.sentry-build-plugin
